@@ -6,6 +6,7 @@ public class Scanner {
     static {
         keywords = new java.util.HashMap<>();
         keywords.put("let", TokenType.LET);
+        keywords.put("print", TokenType.PRINT);
     }
 
     public Scanner(byte[] input) {
