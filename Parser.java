@@ -1,6 +1,6 @@
 public class Parser {
     private Scanner scan;
-    private char currentToken;
+    private Token currentToken;
 
     public Parser(byte[] input) {
         this.scan = new Scanner(input);
@@ -12,47 +12,33 @@ public class Parser {
     }
 
     void expr() {
-        digit();
+        number();
         oper();
     }
 
-    private void match(char t) {
-        if (currentToken == t) {
+    private void match(TokenType t) {
+        if (currentToken.type == t) {
             this.currentToken = this.scan.nextToken();
         } else {
-            throw new Error("Erro de sintaxe: esperado '" + t + "', mas encontrado '" + currentToken + "'");
+            throw new Error("Erro de sintaxe: esperado " + t + " mas encontrado " + currentToken.type);
         }
     }
 
-    void digit() {
-        if (Character.isDigit(currentToken)) {
-            System.out.println("push " + currentToken);
-            match(currentToken);
-        } else {
-            throw new Error("Erro de sintaxe: esperado um dígito");
-        }
+    void number() {
+        System.out.println("push " + currentToken.lexeme);
+        match(TokenType.NUMBER);
     }
 
     void oper() {
-        if (currentToken == '+') {
-            match('+');
-            digit();
+        if (currentToken.type == TokenType.PLUS) {
+            match(TokenType.PLUS);
+            number();
             System.out.println("add");
             oper();
-        } else if (currentToken == '-') {
-            match('-');
-            digit();
+        } else if (currentToken.type == TokenType.MINUS) {
+            match(TokenType.MINUS);
+            number();
             System.out.println("sub");
-            oper();
-        } else if (currentToken == '*') {
-            match('*');
-            digit();
-            System.out.println("mul");
-            oper();
-        } else if (currentToken == '/') {
-            match('/');
-            digit();
-            System.out.println("div");
             oper();
         }
     }
