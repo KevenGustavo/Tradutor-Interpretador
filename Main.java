@@ -1,14 +1,10 @@
 public class Main {
-    public static void main(String[] args) {
-        try {
-            String input = "45 + 89 - 876";
-            System.out.println("Analisando a entrada: " + input);
+  public static void main(String[] args) throws Exception {
 
-            Parser p = new Parser(input.getBytes());
-            p.parse();
+    String input = "let a = 42 + 5;";
+      
+    Parser p = new Parser (input.getBytes());
+    p.parse();
+  }
 
-        } catch (Error e) {
-            System.err.println(e.getMessage());
-        }
-    }
 }
