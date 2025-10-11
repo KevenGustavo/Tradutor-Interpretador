@@ -45,6 +45,16 @@ public class Parser {
             term();
             output.append("sub\n");
             oper();
+        }else if (currentToken.type == TokenType.MUL) {
+            match(TokenType.MUL);
+            term();
+            output.append("mul\n");
+            oper();
+        }else if (currentToken.type == TokenType.DIV) {
+            match(TokenType.DIV);
+            term();
+            output.append("div\n");
+            oper();
         }
     }
 

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 class Command {
     public enum Type {
-        ADD, SUB, PUSH, POP, PRINT
+        ADD, SUB, MUL, DIV, PUSH, POP, PRINT
     }
 
     public Command.Type type;
@@ -61,6 +61,17 @@ public class Interpretador {
                     arg2 = stack.pop();
                     arg1 = stack.pop();
                     stack.push(arg1 - arg2);
+                    break;
+                case MUL:
+                    arg2 = stack.pop();
+                    arg1 = stack.pop();
+                    stack.push(arg1 * arg2);
+                    break;
+                case DIV:
+                    arg2 = stack.pop();
+                    arg1 = stack.pop();
+                    if (arg2 == 0) throw new Error("Divisão por zero.");
+                    stack.push(arg1 / arg2);
                     break;
                 case PUSH:
                     var value = variables.get(command.arg);
