@@ -20,18 +20,33 @@ public class Scanner {
         }
     }
 
-    public char nextToken() {
+    public Token nextToken() {
         char ch = peek();
 
-        if (Character.isDigit(ch) || ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+        if (Character.isDigit(ch)) {
+            return number(); 
+        }
+
+        switch (ch) {
+            case '+':
+                advance();
+                return new Token(TokenType.PLUS, "+"); 
+            case '-':
+                advance();
+                return new Token(TokenType.MINUS, "-"); 
+            case '\0':
+                return new Token(TokenType.EOF, "EOF"); 
+            default:
+                throw new Error("Erro léxico no caractere: " + ch);
+        }
+    }
+
+    private Token number() {
+        int start = current;
+        while (Character.isDigit(peek())) {
             advance();
-            return ch;
         }
-
-        if (ch == '\0') {
-            return '\0';
-        }
-
-        throw new Error("Caractere inválido: " + ch);
+        String n = new String(input, start, current - start);
+        return new Token(TokenType.NUMBER, n); // Retorna um Token do tipo NUMBER [cite: 516]
     }
 }
