@@ -1,10 +1,10 @@
 public class Parser {
-    private byte[] input;
-    private int current;
+    private Scanner scan;
+    private char currentToken;
 
     public Parser(byte[] input) {
-        this.input = input;
-        this.current = 0;
+        this.scan = new Scanner(input);
+        this.currentToken = this.scan.nextToken();
     }
 
     public void parse() {
@@ -16,47 +16,40 @@ public class Parser {
         oper();
     }
 
-    private char peek() {
-        if (current < input.length) {
-            return (char) input[current];
-        }
-        return '\0';
-    }
-
-    private void match(char c) {
-        if (c == peek()) {
-            current++;
+    private void match(char t) {
+        if (currentToken == t) {
+            this.currentToken = this.scan.nextToken();
         } else {
-            throw new Error("Erro de sintaxe: esperado '" + c + "', mas encontrado '" + peek() + "'");
+            throw new Error("Erro de sintaxe: esperado '" + t + "', mas encontrado '" + currentToken + "'");
         }
     }
 
     void digit() {
-        if (Character.isDigit(peek())) {
-            System.out.println("push " + peek());
-            match(peek());
+        if (Character.isDigit(currentToken)) {
+            System.out.println("push " + currentToken);
+            match(currentToken);
         } else {
             throw new Error("Erro de sintaxe: esperado um dígito");
         }
     }
 
     void oper() {
-        if (peek() == '+') {
+        if (currentToken == '+') {
             match('+');
             digit();
             System.out.println("add");
             oper();
-        } else if (peek() == '-') {
+        } else if (currentToken == '-') {
             match('-');
             digit();
             System.out.println("sub");
             oper();
-        } else if (peek() == '*') { 
+        } else if (currentToken == '*') {
             match('*');
             digit();
             System.out.println("mul");
             oper();
-        } else if (peek() == '/') {
+        } else if (currentToken == '/') {
             match('/');
             digit();
             System.out.println("div");
