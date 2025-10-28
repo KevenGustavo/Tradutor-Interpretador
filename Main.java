@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args) {
         String input = """
                 let a = 42 / 2;
-                let b = 4 * 3;
+                let  b = 4q * 3;
                 print a + b;
                 """;
         Parser p = new Parser(input.getBytes());
