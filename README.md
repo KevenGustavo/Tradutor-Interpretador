@@ -41,7 +41,7 @@ Para rodar o projeto localmente, siga os passos abaixo:
 1. **Clone o repositório:**  
    ```Bash  
    git clone https://github.com/KevenGustavo/Tradutor-Interpretador.git  
-   cd Tradutor-Interpretador`
+   cd Tradutor-Interpretador
    ```
 
 2. **Compile os arquivos Java:**  
